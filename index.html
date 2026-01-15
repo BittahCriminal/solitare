@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitaire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>Solitaire</h1>
+            <div id="controls">
+                <button id="new-game-btn">New Game</button>
+                <button id="auto-complete-btn">Auto Complete</button>
+                <span id="move-counter">Moves: 0</span>
+            </div>
+        </header>
+
+        <main id="game-board">
+            <!-- Top row: Stock, Waste, and Foundations -->
+            <div id="top-row">
+                <div id="stock-waste">
+                    <div id="stock" class="card-slot">
+                        <div class="slot-label">Stock</div>
+                    </div>
+                    <div id="waste" class="card-slot">
+                        <div class="slot-label">Waste</div>
+                    </div>
+                </div>
+                <div id="foundations">
+                    <div class="foundation card-slot" data-foundation="0">
+                        <div class="slot-label">♠</div>
+                    </div>
+                    <div class="foundation card-slot" data-foundation="1">
+                        <div class="slot-label">♥</div>
+                    </div>
+                    <div class="foundation card-slot" data-foundation="2">
+                        <div class="slot-label">♦</div>
+                    </div>
+                    <div class="foundation card-slot" data-foundation="3">
+                        <div class="slot-label">♣</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tableau: 7 piles -->
+            <div id="tableau">
+                <div class="tableau-pile card-slot" data-pile="0"></div>
+                <div class="tableau-pile card-slot" data-pile="1"></div>
+                <div class="tableau-pile card-slot" data-pile="2"></div>
+                <div class="tableau-pile card-slot" data-pile="3"></div>
+                <div class="tableau-pile card-slot" data-pile="4"></div>
+                <div class="tableau-pile card-slot" data-pile="5"></div>
+                <div class="tableau-pile card-slot" data-pile="6"></div>
+            </div>
+        </main>
+
+        <!-- Win overlay -->
+        <div id="win-overlay" class="hidden">
+            <div id="win-message">
+                <h2>🎉 Congratulations! 🎉</h2>
+                <p>You won the game!</p>
+                <p id="win-stats"></p>
+                <button id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Auto-complete status -->
+        <div id="auto-status" class="hidden">
+            <span>Auto-completing...</span>
+            <button id="stop-auto-btn">Stop</button>
+        </div>
+    </div>
+
+    <script src="solitaire.js"></script>
+</body>
+</html>

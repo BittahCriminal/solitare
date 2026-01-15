@@ -1,0 +1,436 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a5f2a 0%, #0d3d17 100%);
+    min-height: 100vh;
+    color: white;
+}
+
+#game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+header h1 {
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#new-game-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+#new-game-btn:hover {
+    background: #c0392b;
+}
+
+#auto-complete-btn {
+    background: #3498db;
+    color: white;
+}
+
+#auto-complete-btn:hover {
+    background: #2980b9;
+}
+
+#auto-complete-btn:disabled {
+    background: #7f8c8d;
+    cursor: not-allowed;
+}
+
+#move-counter {
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+/* Game board layout */
+#game-board {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#top-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+#stock-waste {
+    display: flex;
+    gap: 15px;
+}
+
+#foundations {
+    display: flex;
+    gap: 15px;
+}
+
+/* Card slots */
+.card-slot {
+    width: 100px;
+    height: 140px;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slot-label {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.2);
+    user-select: none;
+}
+
+/* Tableau */
+#tableau {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.tableau-pile {
+    min-height: 300px;
+    height: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* Cards */
+.card {
+    width: 100px;
+    height: 140px;
+    border-radius: 8px;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    user-select: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.card.face-down {
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.03) 10px,
+            rgba(255, 255, 255, 0.03) 20px
+        );
+    border: 3px solid #34495e;
+    cursor: default;
+}
+
+.card.face-down:hover {
+    transform: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card.face-up {
+    background: white;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.card.red {
+    color: #e74c3c;
+}
+
+.card.black {
+    color: #2c3e50;
+}
+
+.card-corner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.card-corner.top-left {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.card-corner.bottom-right {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    transform: rotate(180deg);
+}
+
+.card-rank {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card-suit {
+    font-size: 1rem;
+}
+
+.card-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+}
+
+/* Dragging states */
+.card.dragging {
+    z-index: 1000 !important;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5);
+    cursor: grabbing;
+}
+
+.card.drag-child {
+    z-index: 1000 !important;
+}
+
+.card-slot.valid-drop {
+    border-color: #2ecc71;
+    background: rgba(46, 204, 113, 0.2);
+}
+
+/* Stock pile specific */
+#stock {
+    cursor: pointer;
+}
+
+#stock:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#stock.empty {
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+#stock.empty::after {
+    content: '↻';
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Waste pile - show up to 3 cards spread */
+#waste {
+    width: 160px;
+}
+
+#waste .card {
+    transition: left 0.2s ease;
+}
+
+/* Win overlay */
+#win-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+#win-overlay.hidden {
+    display: none;
+}
+
+#win-message {
+    background: white;
+    color: #333;
+    padding: 40px 60px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+#win-message h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #27ae60;
+}
+
+#win-message p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+#play-again-btn {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.2s ease;
+}
+
+#play-again-btn:hover {
+    background: #219a52;
+}
+
+/* Auto-complete status */
+#auto-status {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1500;
+}
+
+#auto-status.hidden {
+    display: none;
+}
+
+#stop-auto-btn {
+    padding: 8px 16px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#stop-auto-btn:hover {
+    background: #c0392b;
+}
+
+/* Foundation pile cards stacking */
+.foundation .card {
+    left: 0 !important;
+    top: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .card-slot, .card {
+        width: 80px;
+        height: 112px;
+    }
+
+    #waste {
+        width: 130px;
+    }
+
+    .card-rank {
+        font-size: 1rem;
+    }
+
+    .card-suit {
+        font-size: 0.9rem;
+    }
+
+    .card-center {
+        font-size: 2rem;
+    }
+
+    .slot-label {
+        font-size: 1.5rem;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    #top-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .card-slot, .card {
+        width: 60px;
+        height: 84px;
+    }
+
+    #waste {
+        width: 100px;
+    }
+
+    #tableau {
+        gap: 5px;
+    }
+
+    #foundations, #stock-waste {
+        gap: 8px;
+    }
+
+    .card-rank {
+        font-size: 0.8rem;
+    }
+
+    .card-center {
+        font-size: 1.5rem;
+    }
+
+    #controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #controls button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
